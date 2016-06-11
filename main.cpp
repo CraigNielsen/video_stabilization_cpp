@@ -48,13 +48,23 @@ struct Trajectory
     double a; // angle
 };
 
+
+
+Mat getROI(Mat & input){
+    Mat roi;
+    namedWindow("show",0);
+    roi = input(Rect(40,40,100,100));
+    imshow("show", roi);
+    waitKey(0);
+}
+
 int main(int argc, char **argv)
 {
-    if(argc < 2) {
-        cout << "./VideoStab [video.avi] " << endl;
-        cout << "built if in qtcreator" << endl;
-        return 0;
-    }
+//    if(argc < 2) {
+//        cout << "./VideoStab [video.avi] " << endl;
+//        cout << "built if in qtcreator" << endl;
+//        return 0;
+//    }
 
     // For further analysis
     ofstream out_transform("prev_to_cur_transformation.txt");
@@ -62,7 +72,8 @@ int main(int argc, char **argv)
     ofstream out_smoothed_trajectory("smoothed_trajectory.txt");
     ofstream out_new_transform("new_prev_to_cur_transformation.txt");
 
-    VideoCapture cap(argv[1]);
+//    VideoCapture cap(argv[1]); for dev
+    VideoCapture cap("/home/craig/cpp_projects/video_stabilizer/test.MOV");
     assert(cap.isOpened());
 
     Mat cur, cur_grey;
@@ -92,6 +103,8 @@ int main(int argc, char **argv)
         vector <Point2f> prev_points2, cur_points2;
         vector <uchar> status;
         vector <float> err;
+       // add feature to track here. can remove all other features to trick it
+        getROI(prev_grey);
 
         goodFeaturesToTrack(prev_grey, prev_points, 200, 0.01, 30);
         calcOpticalFlowPyrLK(prev_grey, cur_grey, prev_points, cur_points, status, err);
