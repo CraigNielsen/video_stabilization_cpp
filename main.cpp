@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     ofstream out_new_transform("new_prev_to_cur_transformation.txt");
 
 //    VideoCapture cap(argv[1]); for dev
-    VideoCapture cap("/home/craig/cpp_projects/video_stabilizer/test.MOV");
+    VideoCapture cap("/home/craig/cpp_projects/test.MOV");
     assert(cap.isOpened());
 
     Mat cur, cur_grey;
