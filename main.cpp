@@ -49,13 +49,23 @@ struct Trajectory
 };
 
 
+void getROI(Mat & input){
 
-Mat getROI(Mat & input){
+    int tp_x,tp_y,tp_width,tp_height;
+    tp_x = 500;
+    tp_y = 500;
+    tp_width = 500;
+    tp_height = 500;
     Mat roi;
+    Mat blank(input.rows, input.cols, CV_8UC1, Scalar(0));
     namedWindow("show",0);
-    roi = input(Rect(40,40,100,100));
-    imshow("show", roi);
-    waitKey(0);
+
+    roi = input(Rect(tp_x,tp_y,tp_width,tp_height));
+    roi.copyTo(blank(Rect(tp_x,tp_y,tp_width,tp_height)));
+    input = blank;
+//    imshow("show", input);
+//    waitKey(0);
+
 }
 
 int main(int argc, char **argv)
