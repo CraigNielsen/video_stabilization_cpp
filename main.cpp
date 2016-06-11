@@ -52,16 +52,23 @@ struct Trajectory
 void getROI(Mat & input){
 
     int tp_x,tp_y,tp_width,tp_height;
-    tp_x = 500;
-    tp_y = 500;
+    int tp_x2,tp_y2,tp_width2,tp_height2;
+    tp_x = 200;
+    tp_y = 400;
     tp_width = 500;
     tp_height = 500;
-    Mat roi;
+    tp_x2 = 1000;
+    tp_y2 = 400;
+    tp_width2 = 500;
+    tp_height2 = 500;
+    Mat roi,roi2;
     Mat blank(input.rows, input.cols, CV_8UC1, Scalar(0));
     namedWindow("show",0);
 
     roi = input(Rect(tp_x,tp_y,tp_width,tp_height));
     roi.copyTo(blank(Rect(tp_x,tp_y,tp_width,tp_height)));
+    roi2 = input(Rect(tp_x2,tp_y2,tp_width2,tp_height2));
+    roi2.copyTo(blank(Rect(tp_x2,tp_y2,tp_width2,tp_height2)));
     input = blank;
 //    imshow("show", input);
 //    waitKey(0);
@@ -114,7 +121,7 @@ int main(int argc, char **argv)
         vector <uchar> status;
         vector <float> err;
        // add feature to track here. can remove all other features to trick it
-        getROI(prev_grey);
+//        getROI(prev_grey);
 
         goodFeaturesToTrack(prev_grey, prev_points, 200, 0.01, 30);
         calcOpticalFlowPyrLK(prev_grey, cur_grey, prev_points, cur_points, status, err);
